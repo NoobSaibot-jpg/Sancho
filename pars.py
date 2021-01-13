@@ -5,7 +5,7 @@ import datetime
 a = datetime.date.today()
 b = str(a.day)+'.'+str(a.month)+'.'+str(a.year)
 if len(b)==9:
-    c = '0' +str(a.day)+'.'+str(a.month)+'.'+str(a.year)
+    c = str(a.day)+'.'+'0'+str(a.month)+'.'+str(a.year)
 else:
     c = b
 
