@@ -63,7 +63,7 @@ async def scheduled():
 			print(f'Send to {s[1]} done!')
 
 async def scheduler1():
-    aioschedule.every().day.at("18:00").do(scheduled)
+    aioschedule.every().day.at("19:00").do(scheduled)
     aioschedule.every().day.at("06:00").do(scheduled)
     while True:
         await aioschedule.run_pending()
