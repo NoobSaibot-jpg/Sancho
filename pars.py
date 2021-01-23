@@ -14,6 +14,12 @@ def date():
 r = rq.get('https://bank.gov.ua/WebSelling/Home/News').text
 soup = bs(r, 'lxml')
 
+def check():
+    num = 0
+    find_news = soup.find_all('div', id='accordion')
+    for i in find_news:
+        num+=1
+    return num
 
 def find_all():
     find_news = soup.find('div', id='collapse1').text
