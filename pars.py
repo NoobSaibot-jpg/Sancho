@@ -48,3 +48,8 @@ def find_last():
         find_date = soup.find('span', class_='pull-right').text
         return f'Вот последняя новость, которая была аж {find_date[17::]}\n\n'+ f
         sleep(30)
+
+check()
+find_all()
+find_last()
+date()
