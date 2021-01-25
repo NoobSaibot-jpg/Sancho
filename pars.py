@@ -4,12 +4,14 @@ import datetime
 from time import sleep
 
 def date():
-    a = datetime.date.today()
-    b = str(a.day)
-    if len(b)==1:
-        return (f'0{b}')
-    else:
-        return b
+    while True:
+        a = datetime.date.today()
+        b = str(a.day)
+        if len(b)==1:
+            return (f'0{b}')
+        else:
+            return b
+        sleep(720)
 
 
 r = rq.get('https://bank.gov.ua/WebSelling/Home/News').text
