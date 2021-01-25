@@ -33,7 +33,7 @@ def find_all():
     else:
         return f'За сегодня новостей нет.\nПоследняя новость была опубликована {find_date[17::]}'
 
-    
+
 def find_last():
     find_news = soup.find('div', id='collapse1').text
     f = str(find_news.strip())
@@ -41,7 +41,7 @@ def find_last():
     return f'Вот последняя новость, которая была аж {find_date[17::]}\n\n'+ f
 	
 while True:
-   date()
-   find_last()
-   find_all()
-   sleep(60)
+    date()
+    find_last()
+    find_all()
+    sleep(60)
