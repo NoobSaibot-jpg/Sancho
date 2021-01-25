@@ -1,6 +1,7 @@
 import requests as rq
 from bs4 import BeautifulSoup as bs
 import datetime
+from time import sleep
 
 def date():
     a = datetime.date.today()
@@ -38,3 +39,7 @@ def find_last():
     f = str(find_news.strip())
     find_date = soup.find('span', class_='pull-right').text
     return f'Вот последняя новость, которая была аж {find_date[17::]}\n\n'+ f
+wile True:
+   find_last()
+   find_all()
+   sleep(60)
