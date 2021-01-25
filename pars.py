@@ -42,6 +42,6 @@ def find_last():
 	
 while True:
    date()
-   print(find_last())
-   print(find_all())
+   find_last()
+   find_all()
    sleep(60)
