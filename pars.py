@@ -1,4 +1,3 @@
-import openpyxl as opx
 from time import sleep
 import requests as rq
 from bs4 import BeautifulSoup as bs
