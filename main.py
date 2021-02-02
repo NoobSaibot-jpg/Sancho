@@ -54,6 +54,8 @@ async def echo_message(msg: types.Message):
     if msg.text == 'Показать последнюю новость':
         await msg.reply(news.check_last() , reply_markup=config.keyboard)
 
+   else:
+      await bot.send_stiker(chat_id= msg.chat.id, file= 'AAMCAgADGQEAAQf-x2AZxnpecyO_vHDftY4EbVrRT9BhAAICAAOUpZAP1D3JZCcZGsr-dJoOAAQBAAdtAANOggACHgQ')
 
 
 db = SQLighter('db.db')
