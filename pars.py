@@ -13,7 +13,7 @@ class News():
             check_news = check.read()
 
 
-    def check1(self):
+    def check_news(self):
         r = rq.get('https://bank.gov.ua/WebSelling/Home/News').text
         soup = bs(r, 'lxml')
         find_news = soup.find('div', class_='list-group').text
