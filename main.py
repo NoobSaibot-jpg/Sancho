@@ -3,7 +3,7 @@ from aiogram.utils import executor
 from aiogram.dispatcher import Dispatcher
 from config import Token
 import config
-import pars
+from pars import News
 from sqlighter import SQLighter
 import asyncio
 import aioschedule
@@ -13,6 +13,8 @@ bot = Bot(token=Token)
 dp = Dispatcher(bot)
 
 db = SQLighter('db.db')
+
+news = News('check.txt')
 
 @dp.message_handler(commands=['start'])
 async def process_start_command(message: types.Message):
@@ -50,7 +52,7 @@ async def unsubscribe(message: types.Message):
 @dp.message_handler()
 async def echo_message(msg: types.Message):
     if msg.text == 'Показать последнюю новость':
-        await msg.reply(pars.find_last(), reply_markup=config.keyboard)
+        await msg.reply(news.check1() , reply_markup=config.keyboard)
 
 
 
@@ -59,7 +61,7 @@ db = SQLighter('db.db')
 async def scheduled():
 		subscriptions = db.get_subscriptions()
 		for s in subscriptions:
-			await bot.send_message(s[1], text=pars.find_all(), reply_markup=config.keyboard)
+			await bot.send_message(s[1], text=news.check1(), reply_markup=config.keyboard)
 			print(f'Send to {s[1]} done!')
 
 async def scheduler1():
