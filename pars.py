@@ -1,6 +1,5 @@
 import openpyxl as opx
 from time import sleep
-
 import requests as rq
 from bs4 import BeautifulSoup as bs
 
@@ -19,3 +18,10 @@ class News():
         find_news = soup.find('div', class_='list-group').text
         f = str(find_news.strip())
         return f
+
+    def check_last(self):
+        r = rq.get('https://bank.gov.ua/WebSelling/Home/News').text
+        soup = bs(r, 'lxml')
+        find_news = soup.find('div', class_='list-group').text
+        f = str(find_news.strip())
+        return f'Вот последняя новость: \n\n{f} '

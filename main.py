@@ -52,7 +52,7 @@ async def unsubscribe(message: types.Message):
 @dp.message_handler()
 async def echo_message(msg: types.Message):
     if msg.text == 'Показать последнюю новость':
-        await msg.reply(news.check_news() , reply_markup=config.keyboard)
+        await msg.reply(news.check_last() , reply_markup=config.keyboard)
 
 
 
