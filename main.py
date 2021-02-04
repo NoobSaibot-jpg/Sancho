@@ -54,10 +54,6 @@ async def last_message(msg: types.Message):
     if msg.text == 'Показать последнюю новость':
         await msg.reply(news.check_last() , reply_markup=config.keyboard)
 
-@dp.message_handler()
-async def not_message(msg: types.Message):
-	await bot.reply_sticker(sticker= 'CAACAgIAAxkBAAEH_sdgGcZ6XnMjv7xw37WOBG1a0U_QYQACAgADlKWQD9Q9yWQnGRrKHgQ')
-	await bot.reply('Я не понимаю!\n/help')
 
 db = SQLighter('db.db')
 
