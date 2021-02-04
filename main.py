@@ -57,23 +57,22 @@ async def last_message(msg: types.Message):
 
 db = SQLighter('db.db')
 
-async def scheduled():
-		subscriptions = db.get_subscriptions()
-		for s in subscriptions:
-			await bot.send_message(s[1], text=news.check_news1(), reply_markup=config.keyboard)
-			print(f'Send to {s[1]} done!')
+async def scheduled(wait_for):
+	subscriptions = db.get_subscriptions()
+	while True:
+		await asyncio.sleep(wait_for)
+		new_news = news.read_check()
+		old_news = news.check_point()
+		text = news.check_news1()
+		if new_news != old_news:
+    			news.write_check_point()
+    			for s in subscriptions:
+    				await bot.send_message(s[1], text=text, reply_markup=config.keyboard)
+		else:
+    			continue
 
-async def scheduler1():
-    aioschedule.every().day.at("21:59").do(scheduled)
-    while True:
-        await aioschedule.run_pending()
-        await asyncio.sleep(30)
+loop = asyncio.get_event_loop()
+loop.create_task(scheduled(10))
 
-async def on_startup(x):
-    asyncio.create_task(scheduler1())
-
-
-
-# запускаем лонг поллинг
 if __name__ == '__main__':
-	executor.start_polling(dp, on_startup=on_startup)
+    executor.start_polling(dp, loop= loop)
