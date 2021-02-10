@@ -65,9 +65,9 @@ async def scheduled(wait_for):
 		old_news = news.check_point()
 		text = news.check_news1()
 		if new_news != old_news:
-    			news.write_check_point()
-    			for s in subscriptions:
-    				await bot.send_message(s[1], text=text, reply_markup=config.keyboard)
+				for s in subscriptions:
+					await bot.send_message(s[1], text=text, reply_markup=config.keyboard)
+				news.write_check_point()
 		else:
     			continue
 
