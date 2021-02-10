@@ -8,8 +8,7 @@ class News():
 
     def __init__(self, check):
         self.check = check
-        with open (check, 'r', encoding= 'utf8'):
-            pass
+
 
     '''Считывание файла проверки'''
     def read_check(self):
