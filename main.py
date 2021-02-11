@@ -71,10 +71,9 @@ async def scheduled(wait_for):
 		else:
     			continue
 
-# loop = asyncio.get_event_loop()
-# loop.create_task(scheduled(10))
-
+loop = asyncio.get_event_loop()
+loop.create_task(scheduled(10))
 
 if __name__ == '__main__':
-    dp.loop.run_until_complete(scheduled(10))
-    executor.start_polling(dp)
+    #dp.loop.create_task(scheduled(10))
+    executor.start_polling(dp, lool= loop)
