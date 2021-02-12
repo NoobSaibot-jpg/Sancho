@@ -12,7 +12,6 @@ import aioschedule
 bot = Bot(token=Token)
 dp = Dispatcher(bot)
 
-db = SQLighter('db.db')
 news = News('check.txt')
 
 
@@ -76,4 +75,4 @@ loop.create_task(scheduled(10))
 
 if __name__ == '__main__':
     #dp.loop.create_task(scheduled(10))
-    executor.start_polling(dp, lool= loop)
+    executor.start_polling(dp, loop = loop)
