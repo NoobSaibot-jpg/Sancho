@@ -7,6 +7,7 @@ from pars import News
 from sqlighter import SQLighter
 import asyncio
 import aioschedule
+from time import sleep
 
 
 bot = Bot(token=Token)
@@ -56,23 +57,23 @@ async def last_message(msg: types.Message):
 
 db = SQLighter('db.db')
 
-async def scheduled(wait_for):
-	subscriptions = db.get_subscriptions()
-	while True:
-		await asyncio.sleep(wait_for)
-		new_news = news.read_check()
-		old_news = news.check_point()
-		text = news.check_news1()
-		if new_news != old_news:
+async def scheduled():
+		while True:
+			new_news = news.read_check()
+			old_news = news.check_point()
+			text = news.check_news1()
+			if new_news != old_news:
+				subscriptions = db.get_subscriptions()
 				for s in subscriptions:
 					await bot.send_message(s[1], text=text, reply_markup=config.keyboard)
 				news.write_check_point()
-		else:
-    			continue
 
-loop = asyncio.get_event_loop()
-loop.create_task(scheduled(10))
+def repeat(coro, loop):
+    asyncio.ensure_future(coro(), loop=loop)
+    loop.call_later(10, repeat, coro, loop)
+
 
 if __name__ == '__main__':
-    #dp.loop.create_task(scheduled(10))
-    executor.start_polling(dp, loop = loop)
+    loop = asyncio.get_event_loop()
+    loop.call_later(10, repeat, scheduled, loop)
+    executor.start_polling(dp, loop=loop)
