@@ -52,7 +52,7 @@ async def unsubscribe(message: types.Message):
 @dp.message_handler()
 async def last_message(msg: types.Message):
     if msg.text == 'Показать последнюю новость':
-        await msg.reply(news.check_last() , reply_markup=config.keyboard)
+        await msg.reply(news.check_news1() , reply_markup=config.keyboard)
 
 
 db = SQLighter('db.db')
@@ -68,12 +68,15 @@ async def scheduled():
 					await bot.send_message(s[1], text=text, reply_markup=config.keyboard)
 				news.write_check_point()
 
-def repeat(coro, loop):
-    asyncio.ensure_future(coro(), loop=loop)
-    loop.call_later(10, repeat, coro, loop)
+async def scheduler1():
+    aioschedule.every().day.at("00:01").do(scheduled)
+    while True:
+        await aioschedule.run_pending()
+        await asyncio.sleep(30)
+
+async def on_startup(x):
+    asyncio.create_task(scheduler1())
 
 
 if __name__ == '__main__':
-    loop = asyncio.get_event_loop()
-    loop.call_later(10, repeat, scheduled, loop)
-    executor.start_polling(dp, loop=loop)
+	executor.start_polling(dp, on_startup=on_startup)
