@@ -43,6 +43,14 @@ class News():
             a+=1
         return str(a)
 
+    def full_news(self):
+        r = rq.get('https://bank.gov.ua/WebSelling/Home/News').text
+        soup = bs(r, 'lxml')
+        find_news = soup.find('div', id='collapse1').text
+        f = str(find_news.strip())
+        return f'Полное содержание: \n\n{f} '
+
+
     '''Перезапись файла проверки'''
     def write_check_point(self):
         with open (self.check, 'w') as file:

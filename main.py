@@ -7,14 +7,12 @@ from pars import News
 from sqlighter import SQLighter
 import asyncio
 import aioschedule
-from time import sleep
 
 
 bot = Bot(token=Token)
 dp = Dispatcher(bot)
-
 news = News('check.txt')
-
+db = SQLighter('db.db')
 
 @dp.message_handler(commands=['start'])
 async def process_start_command(message: types.Message):
@@ -50,26 +48,22 @@ async def unsubscribe(message: types.Message):
 
 
 @dp.message_handler()
-async def last_message(msg: types.Message):
+async def echo_message(msg: types.Message):
     if msg.text == 'Показать последнюю новость':
-        await msg.reply(news.check_news1() , reply_markup=config.keyboard)
+        await msg.reply(news.check_last(), reply_markup=config.keyboard2)
 
 
 db = SQLighter('db.db')
 
 async def scheduled():
-		while True:
-			new_news = news.read_check()
-			old_news = news.check_point()
-			text = news.check_news1()
-			if new_news != old_news:
-				subscriptions = db.get_subscriptions()
-				for s in subscriptions:
-					await bot.send_message(s[1], text=text, reply_markup=config.keyboard)
-				news.write_check_point()
+		subscriptions = db.get_subscriptions()
+		for s in subscriptions:
+			await bot.send_message(s[1], text=news.check_news1, reply_markup=config.keyboard)
+			print(f'Send to {s[1]} done!')
 
 async def scheduler1():
-    aioschedule.every().day.at("00:01").do(scheduled)
+    aioschedule.every().day.at("18:00").do(scheduled)
+    aioschedule.every().day.at("06:00").do(scheduled)
     while True:
         await aioschedule.run_pending()
         await asyncio.sleep(30)
@@ -78,5 +72,7 @@ async def on_startup(x):
     asyncio.create_task(scheduler1())
 
 
+
+# запускаем лонг поллинг
 if __name__ == '__main__':
 	executor.start_polling(dp, on_startup=on_startup)
