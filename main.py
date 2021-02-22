@@ -58,7 +58,7 @@ db = SQLighter('db.db')
 async def scheduled():
 		subscriptions = db.get_subscriptions()
 		for s in subscriptions:
-			await bot.send_message(s[1], text=news.check_news1, reply_markup=config.keyboard)
+			await bot.send_message(s[1], text=news.check_news1(), reply_markup=config.keyboard)
 			print(f'Send to {s[1]} done!')
 
 async def scheduler1():
