@@ -50,7 +50,7 @@ async def unsubscribe(message: types.Message):
 @dp.message_handler()
 async def echo_message(msg: types.Message):
     if msg.text == 'Показать последнюю новость':
-        await msg.reply(news.check_last(), reply_markup=config.keyboard2)
+        await msg.reply(news.check_last(), reply_markup=config.keyboard1)
 
 
 db = SQLighter('db.db')
