@@ -50,7 +50,7 @@ async def unsubscribe(message: types.Message):
 @dp.message_handler()
 async def echo_message(msg: types.Message):
     if msg.text == 'Показать последнюю новость':
-        await msg.reply(news.check_last(), reply_markup=config.keyboard2)
+        await msg.reply(news.check_last(), reply_markup=config.keyboard1)
 
 
 @dp.callback_query_handler(func=lambda c: c.data == 'see_more')
@@ -63,7 +63,7 @@ db = SQLighter('db.db')
 async def scheduled():
 		subscriptions = db.get_subscriptions()
 		for s in subscriptions:
-			await bot.send_message(s[1], text=news.check_news1, reply_markup=config.keyboard)
+			await bot.send_message(s[1], text=news.check_news1(), reply_markup=config.keyboard)
 			print(f'Send to {s[1]} done!')
 
 async def scheduler1():
