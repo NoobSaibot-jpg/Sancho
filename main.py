@@ -22,6 +22,7 @@ async def process_start_command(message: types.Message):
 async def help_comand(message: types.Message):
     await message.reply('Выберите команду \n\n /subscribe - подписаться на рассылку \n /unsubscribe - отписаться от рассылки \n /start - перезапустить бота')
 
+
 # Команда активации подписки
 @dp.message_handler(commands=['subscribe'])
 async def subscribe(message: types.Message):
@@ -50,12 +51,13 @@ async def unsubscribe(message: types.Message):
 @dp.message_handler()
 async def echo_message(msg: types.Message):
     if msg.text == 'Показать последнюю новость':
-        await msg.reply(news.check_last(), reply_markup=config.keyboard1)
+        await msg.reply(news.check_last(), reply_markup=config.keyboard2)
 
-
-@dp.callback_query_handler(func=lambda c: c.data == 'see_more')
-async def process_callback_button1(callback_query: types.CallbackQuery):
-    await bot.send_message(callback_query.from_user.id, news.full_news())
+@dp.callback_query_handlers(dp)
+async def see_more(callback_query: types.CallbackQuery):
+	if callback_query == 'see_more':
+    		await bot.answer_callback_query(callback_query_id= callback_query.id, text= news.full_news())
+    		
 
 
 db = SQLighter('db.db')
@@ -63,7 +65,7 @@ db = SQLighter('db.db')
 async def scheduled():
 		subscriptions = db.get_subscriptions()
 		for s in subscriptions:
-			await bot.send_message(s[1], text=news.check_news1(), reply_markup=config.keyboard)
+			await bot.send_message(s[1], text=news.check_news1, reply_markup=config.keyboard2)
 			print(f'Send to {s[1]} done!')
 
 async def scheduler1():
