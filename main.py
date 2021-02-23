@@ -53,6 +53,11 @@ async def echo_message(msg: types.Message):
         await msg.reply(news.check_last(), reply_markup=config.keyboard2)
 
 
+@dp.callback_query_handler(func=lambda c: c.data == 'see_more')
+async def process_callback_button1(callback_query: types.CallbackQuery):
+    await bot.send_message(callback_query.from_user.id, news.full_news())
+
+
 db = SQLighter('db.db')
 
 async def scheduled():
