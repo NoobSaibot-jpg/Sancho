@@ -53,10 +53,10 @@ async def echo_message(msg: types.Message):
     if msg.text == 'Показать последнюю новость':
         await msg.reply(news.check_last(), reply_markup=config.keyboard2)
 
-@dp.callback_query_handlers(dp)
+@dp.callback_query_handler()
 async def see_more(callback_query: types.CallbackQuery):
-	if callback_query == 'see_more':
-    		await bot.answer_callback_query(callback_query_id= callback_query.id, text= news.full_news())
+	await bot.answer_callback_query(callback_query_id= callback_query.id)
+	await bot.send_message(callback_query.from_user.id, news.full_news())
     		
 
 
