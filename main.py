@@ -64,16 +64,20 @@ db = SQLighter('db.db')
 
 async def scheduled():
 		subscriptions = db.get_subscriptions()
-		for s in subscriptions:
-			await bot.send_message(s[1], text=news.check_news1(), reply_markup=config.keyboard2)
-			print(f'Send to {s[1]} done!')
+		a = news.check_point()
+		b = news.read_check()
+		if a!=b:
+			for s in subscriptions:
+				await bot.send_message(s[1], text=news.check_news1(), reply_markup=config.keyboard2)
+				news.write_check_point()
+				print(f'Send to {s[1]} done!')
+
 
 async def scheduler1():
-    aioschedule.every().day.at("18:00").do(scheduled)
-    aioschedule.every().day.at("06:00").do(scheduled)
+    aioschedule.every(1).minutes.do(scheduled)
     while True:
         await aioschedule.run_pending()
-        await asyncio.sleep(30)
+        await asyncio.sleep(1)
 
 async def on_startup(x):
     asyncio.create_task(scheduler1())
