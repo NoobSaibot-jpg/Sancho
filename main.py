@@ -56,7 +56,7 @@ async def echo_message(msg: types.Message):
 @dp.callback_query_handler()
 async def see_more(callback_query: types.CallbackQuery):
 	await bot.answer_callback_query(callback_query_id= callback_query.id)
-	await bot.send_message(callback_query.from_user.id, news.full_news())
+	await bot.send_message(callback_query.from_user.id, news.full_news(), reply_markup= config.keyboard)
     		
 
 
