@@ -64,13 +64,15 @@ db = SQLighter('db.db')
 
 async def scheduled():
 		subscriptions = db.get_subscriptions()
-		a = news.check_point()
+		a = news.check_point2()
 		b = news.read_check()
-		if a!=b:
+		if a>b:
 			for s in subscriptions:
 				await bot.send_message(s[1], text=news.check_news1(), reply_markup=config.keyboard2)
 				news.write_check_point()
 				print(f'Send to {s[1]} done!')
+		elif a<b:
+    			news.write_check_point()
 
 
 async def scheduler1():

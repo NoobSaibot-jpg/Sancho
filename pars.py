@@ -27,11 +27,15 @@ class News():
             file.write(self.check_point())
 
 
-    '''Считывание файла проверки'''
     def read_check(self):
         with open (self.check, 'r') as file:
             read = file.read()
-            return read
+            return int(read)
+
+
+    def check_point2(self):
+        a = int(self.check_point())
+        return a
 
 
     '''Поиск новости для рассылки'''
