@@ -76,7 +76,7 @@ async def scheduled():
 
 
 async def scheduler1():
-    aioschedule.every(1).minutes.do(scheduled)
+    aioschedule.every(10).minutes.do(scheduled)
     while True:
         await aioschedule.run_pending()
         await asyncio.sleep(1)
