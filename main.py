@@ -16,7 +16,7 @@ db = SQLighter('db.db')
 
 @dp.message_handler(commands=['start'])
 async def process_start_command(message: types.Message):
-    await message.reply("Привет!\nЧтобы получать новости подпишитесь на рассылку!\n/subscribe\n/help - помощь, для Санька, а то хер разберется)", reply_markup=config.keyboard1)
+    await message.reply("Привет!\nЧтобы получать новости подпишитесь на рассылку!\n/subscribe\n/help - помощь, для TheMrSuperAlex007, а то хер разберется)", reply_markup=config.keyboard1)
 
 @dp.message_handler(commands=['help'])
 async def help_comand(message: types.Message):
